@@ -1,5 +1,5 @@
-
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,11 +12,17 @@
     button:hover { background: #218838; }
   </style>
 </head>
-<body><h2>Vape Camera Viewer</h2>
+<body>
+
+<h2>Vape Camera Viewer</h2>
 <video id="video" autoplay playsinline></video>
-<button onclick="startCamera()">Start Camera</button>
-<button onclick="takePhoto()">Take Photo</button>
-<canvas id="canvas" style="display:none;"></canvas><script>
+<div>
+  <button onclick="startCamera()">Start Camera</button>
+  <button onclick="takePhoto()">Take Photo</button>
+</div>
+<canvas id="canvas" style="display:none;"></canvas>
+
+<script>
 let stream;
 
 function startCamera() {
@@ -45,5 +51,7 @@ function takePhoto() {
 
   canvas.style.display = 'block';
 }
-</script></body>
+</script>
+
+</body>
 </html>

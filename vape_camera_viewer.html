@@ -1,29 +1,30 @@
 
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vape Camera Viewer</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #222; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
-    video { width: 90%; max-width: 500px; border: 2px solid #28a745; border-radius: 10px; }
-    button { margin-top: 20px; padding: 10px 20px; font-size: 18px; background: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    body { font-family: Arial, sans-serif; background: #222; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; margin: 0; }
+    h2 { margin-top: 20px; }
+    video, canvas { width: 90%; max-width: 500px; margin-top: 20px; border: 2px solid #28a745; border-radius: 10px; }
+    button { margin: 15px; padding: 10px 20px; font-size: 18px; background: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
     button:hover { background: #218838; }
   </style>
 </head>
-<body>
-
-<h2>Vape Camera Viewer</h2>
+<body><h2>Vape Camera Viewer</h2>
 <video id="video" autoplay playsinline></video>
 <button onclick="startCamera()">Start Camera</button>
+<button onclick="takePhoto()">Take Photo</button>
+<canvas id="canvas" style="display:none;"></canvas><script>
+let stream;
 
-<script>
 function startCamera() {
   const video = document.getElementById('video');
 
   navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' }, audio: false })
-    .then(stream => {
+    .then(s => {
+      stream = s;
       video.srcObject = stream;
     })
     .catch(err => {
@@ -31,7 +32,18 @@ function startCamera() {
       alert("Could not access camera. Please allow permissions and try again.");
     });
 }
-</script>
 
-</body>
+function takePhoto() {
+  const video = document.getElementById('video');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  canvas.style.display = 'block';
+}
+</script></body>
 </html>
